@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React from 'react';
 import { LeftOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './buttonBackPage.scss';
 const ButtonBackPage = () => {
   const navigate = useNavigate();

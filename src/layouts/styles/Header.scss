@@ -1,0 +1,56 @@
+.Header {
+  &__button {
+    border-radius: 9999px;
+    padding: 8px 16px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    background-color: #f0d5fa;
+    transition: all linear 0.1s;
+
+    p {
+      line-height: 24px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #b226e3;
+    }
+
+    &__icon {
+      color: #b226e3;
+      font-size: 16px;
+    }
+
+    &--active {
+      background-color: #b226e3;
+
+      p {
+        color: #fff;
+      }
+
+      .Header__button__icon {
+        color: #fff;
+      }
+    }
+
+    &:hover {
+      background-color: #b226e3;
+      opacity: 0.75;
+      p {
+        color: #fff;
+      }
+      .Header__button__icon {
+        color: #fff;
+      }
+    }
+
+    &__account {
+      &:hover {
+        .icon-account {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
