@@ -1,19 +1,19 @@
 import React, { Suspense } from 'react';
 import { Layout, Spin } from 'antd';
-import routes from 'routes/routes';
-const Header = React.lazy(() => import('./components/Header'));
+import routes from 'routes/routesUser';
+const HeaderUser = React.lazy(() => import('./components/HeaderUser'));
 const Footer = React.lazy(() => import('./components/Footer'));
 const PermissionContent = React.lazy(() => import('middleware/PermissionContent'));
 
 const { Content } = Layout;
 
-const DefaultLayout = () => {
+const LayoutUser = () => {
   return (
-    <Layout className="DefaultLayout min-h-screen">
+    <Layout className="LayoutUser min-h-screen">
       <Suspense fallback={<Spin />}>
-        <Header />
+        <HeaderUser />
       </Suspense>
-      <Content>
+      <Content className="container">
         <PermissionContent routes={routes} />
       </Content>
       <Suspense fallback={<Spin />}>
@@ -23,4 +23,4 @@ const DefaultLayout = () => {
   );
 };
 
-export default DefaultLayout;
+export default LayoutUser;

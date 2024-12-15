@@ -1,7 +1,8 @@
-import routes from './routes';
-
+import routesUser from './routesUser';
+import routesAdmin from './routesAdmin';
 const configs = {
-  routes,
+  routesUser,
+  routesAdmin,
 };
 
 export default configs;

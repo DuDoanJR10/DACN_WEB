@@ -1,17 +1,17 @@
 import React from 'react';
 import { App } from './App';
 import './i18n';
-import { persistor, rootStore } from './store';
+import { store, persistor } from 'store';
 import { Provider } from 'react-redux';
-import ReactDOM from 'react-dom/client';
 import { PersistGate } from 'redux-persist/integration/react';
+import ReactDOM from 'react-dom/client';
 import { ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
-    <Provider store={rootStore}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ConfigProvider
           theme={{
