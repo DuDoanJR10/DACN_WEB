@@ -22,9 +22,14 @@ export const authSlice = createSlice({
     setIsLogin(state, action) {
       state.isLogin = action.payload;
     },
+    setUser(state, action) {
+      state.user.id = action.payload?.id;
+      state.user.name = action.payload?.name;
+      state.user.email = action.payload?.email;
+    },
   },
 });
 
-export const { setIsAdmin, setIsLogin } = authSlice.actions;
+export const { setIsAdmin, setIsLogin, setUser } = authSlice.actions;
 
 export default authSlice.reducer;

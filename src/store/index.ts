@@ -3,6 +3,8 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 import storage from 'redux-persist/lib/storage';
 import productAdminReducer from './slices/productAdminSlice';
 import authReducer from 'store/slices/authSlice';
+import productReducer from 'store/slices/productSlice';
+import categoryReducer from 'store/slices/categorySlice';
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +20,8 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
+  product: productReducer,
+  category: categoryReducer,
   productAdmin: productAdminReducer,
 });
 

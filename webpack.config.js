@@ -54,6 +54,7 @@ module.exports = {
       routes: path.resolve(__dirname, './src/routes'),
       assets: path.resolve(__dirname, './src/assets'),
       utils: path.resolve(__dirname, './src/utils'),
+      apis: path.resolve(__dirname, './src/apis'),
       store: path.resolve(__dirname, './src/store'),
       hooks: path.resolve(__dirname, './src/hooks'),
       pages: path.resolve(__dirname, './src/pages'),

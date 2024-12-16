@@ -2,7 +2,6 @@ import { APP_CONFIG } from 'utils/env';
 import { DataCookie } from 'types/common';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import { history } from 'routes/history';
 
 export const getCookie = (cookieName: string | undefined) => {
   if (!cookieName) {
@@ -187,4 +186,8 @@ export const handleDisplayTimeToNow = (pastDate: string) => {
   } else {
     return past.fromNow();
   }
+};
+
+export const handleErrorAPI = (error: any) => {
+  toast.error(error?.response?.data?.message);
 };
