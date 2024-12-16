@@ -1,3 +1,6 @@
+import { PaginationParams } from 'types/common';
+import { ProductAdminParams } from 'types/productAdmin';
+
 export interface AuthState {
   isLogin: boolean;
   isAdmin: boolean;
@@ -7,4 +10,9 @@ export interface AuthState {
     name: string;
     phone?: string;
   };
+}
+
+export interface ProductAdminState {
+  listProductAdmin: ProductAdminParams[];
+  pagination: PaginationParams;
 }

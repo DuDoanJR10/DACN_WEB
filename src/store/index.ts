@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import productAdminReducer from './slices/productAdminSlice';
 import authReducer from 'store/slices/authSlice';
 
 const persistConfig = {
@@ -13,11 +14,11 @@ const persistConfig = {
 const authPersistConfig = {
   key: 'auth',
   storage,
-  // whitelist: ['user', 'isLogin'],
 };
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
+  productAdmin: productAdminReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

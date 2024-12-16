@@ -19,3 +19,9 @@ export interface NavParams {
   Icon: IconType;
   url: string;
 }
+
+export interface PaginationParams {
+  page: number;
+  limit: number;
+  total: number;
+}
