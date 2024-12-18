@@ -5,9 +5,16 @@ export interface ProductParams {
   name: string;
   description: string;
   quantity_in_stock: number;
-  price: string;
+  price_original: number;
+  price: number;
   thumbnail: string;
   image_urls: string[];
   category_id: string;
   category: CategoryParams;
+  product_attributes: ProductAttributesParams[];
+}
+export interface ProductAttributesParams {
+  id: string;
+  quantity: number;
+  size: string;
 }

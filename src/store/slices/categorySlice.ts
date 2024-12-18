@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { CategoryState } from 'store/interface';
 
 const initialState = {
   listCategory: [],
-};
+} as CategoryState;
 
 const categorySlice = createSlice({
   name: 'category',

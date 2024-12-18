@@ -1,3 +1,4 @@
+import { CategoryParams } from 'types/category';
 import { PaginationParams } from 'types/common';
 import { ProductAdminParams } from 'types/productAdmin';
 
@@ -15,4 +16,8 @@ export interface AuthState {
 export interface ProductAdminState {
   listProductAdmin: ProductAdminParams[];
   pagination: PaginationParams;
+}
+
+export interface CategoryState {
+  listCategory: CategoryParams[];
 }

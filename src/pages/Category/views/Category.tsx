@@ -1,12 +1,13 @@
 import { Button, Flex, Modal, Popconfirm, Space, Table } from 'antd';
-import { getListCategoryAPI } from 'apis/category';
+import { deleteCategoryAPI, getListCategoryAPI } from 'apis/category';
 import TextDisplay from 'components/TextDisplay';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { setListCategory } from 'store/slices/categorySlice';
 import { handleErrorAPI } from 'utils/helpers';
 import CategoryDetail from '../components/CategoryDetail';
 import { CategoryParams } from 'types/category';
+import { toast } from 'react-toastify';
 
 const Category = () => {
   const dispatch = useAppDispatch();
@@ -15,21 +16,23 @@ const Category = () => {
   const [category, setCategory] = useState<CategoryParams>();
   const { listCategory } = useAppSelector((state) => state.category);
 
-  const handleGetListCategory = async () => {
+  const handleGetListCategory = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await getListCategoryAPI();
-      dispatch(setListCategory(res?.data?.map((category: any, index: number) => ({ ...category, key: index + 1 }))));
+      const res: any = await getListCategoryAPI();
+      if (res?.success) {
+        dispatch(setListCategory(res?.data?.map((category: any, index: number) => ({ ...category, key: index + 1 }))));
+      }
       setLoading(false);
     } catch (error: any) {
       setLoading(false);
       handleErrorAPI(error);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     handleGetListCategory();
-  }, []);
+  }, [handleGetListCategory]);
 
   const handleEdit = (record: CategoryParams) => {
     setCategory(record);
@@ -38,7 +41,14 @@ const Category = () => {
 
   const handleDelete = async (id: string) => {
     try {
+      setLoading(true);
+      const res: any = await deleteCategoryAPI(id);
+      if (res?.success) {
+        toast.success(res?.message);
+        handleGetListCategory();
+      }
     } catch (error: any) {
+      setLoading(false);
       handleErrorAPI(error);
     }
   };
