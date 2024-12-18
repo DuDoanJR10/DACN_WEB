@@ -4,6 +4,7 @@ import configs from 'configs';
 const Category = React.lazy(() => import('pages/Category/views/Category'));
 const Account = React.lazy(() => import('pages/Account/views/Account'));
 const ProductAdmin = React.lazy(() => import('pages/ProductAdmin/views/ProductAdmin'));
+const Report = React.lazy(() => import('pages/Report/views/Report'));
 const Bill = React.lazy(() => import('pages/Bill/views/Bill'));
 const NotFound = React.lazy(() => import('pages/NotFound/NotFound'));
 
@@ -12,6 +13,11 @@ const routes = [
     path: configs.routesAdmin.notFound,
     element: NotFound,
     name: 'Not Found',
+  },
+  {
+    path: configs.routesAdmin.report,
+    element: Report,
+    name: 'Báo cáo',
   },
   {
     path: configs.routesAdmin.productAdmin,

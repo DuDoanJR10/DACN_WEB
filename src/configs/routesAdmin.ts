@@ -1,5 +1,6 @@
 const routesAdmin = {
-  productAdmin: '',
+  report: '',
+  productAdmin: 'product',
   category: 'category',
   account: 'account',
   bill: 'bill',
