@@ -1,0 +1,10 @@
+.Explore {
+  &__select {
+    min-width: 150px;
+    .ant-select-selector {
+      padding-top: 4px !important;
+      padding-right: 4px !important;
+      border-color: #b226e3 !important;
+    }
+  }
+}

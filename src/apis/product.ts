@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { ProductAttributesParams } from 'types/product';
 import axiosAdmin from 'utils/http';
 
@@ -5,8 +6,17 @@ export const getListProductAPI = () => {
   return axiosAdmin.get('api/product/get-list');
 };
 
+export const getListProductFilterAPI = (params: { name?: string; category_id?: string }) => {
+  const queryString = qs.stringify(params, { arrayFormat: 'brackets' });
+  return axiosAdmin.get(`api/product/get-list?${queryString}`);
+};
+
 export const getDetailProductAPI = (id: string) => {
   return axiosAdmin.get(`api/admin/product/detail/${id}`);
+};
+
+export const getDetailProductUserAPI = (id: string) => {
+  return axiosAdmin.get(`api/product/detail/${id}`);
 };
 
 export const deleteProductAPI = (id: string) => {

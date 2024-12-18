@@ -1,0 +1,15 @@
+.SidebarUser {
+  min-height: calc(100vh - 80px);
+  flex-shrink: 0;
+  &__item {
+    &:hover {
+      .SidebarUser__item__icon {
+        color: #b226e3;
+      }
+
+      .SidebarUser__item__name {
+        color: #b226e3;
+      }
+    }
+  }
+}

@@ -8,18 +8,16 @@ export const deleteCategoryAPI = (id: string) => {
   return axiosAdmin.delete(`api/admin/category/${id}`);
 };
 
-export const updateCategoryAPI = (params: { id: string; name: string; description: string; image: string }) => {
+export const updateCategoryAPI = (params: { id: string; name: string; description: string }) => {
   return axiosAdmin.put(`api/admin/category/${params?.id}`, {
     name: params?.name,
     description: params?.description,
-    image: params?.image,
   });
 };
 
-export const createCategoryAPI = (params: { name: string; description: string; image: string }) => {
+export const createCategoryAPI = (params: { name: string; description: string }) => {
   return axiosAdmin.post('api/admin/category/create', {
     name: params?.name,
     description: params?.description,
-    image: params?.image,
   });
 };

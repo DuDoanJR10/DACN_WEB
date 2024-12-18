@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Header.scss';
 import { Button, Flex, Input, Popover } from 'antd';
-import { FaHome, FaShoppingCart, FaShoppingBag } from 'react-icons/fa';
+import { FaHome, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import { FaRegUser, FaSearchengin } from 'react-icons/fa6';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'store/hooks';
@@ -36,29 +36,23 @@ const HeaderUser = () => {
             to="/explore"
             className={({ isActive }) => (isActive ? 'Header__button Header__button--active' : 'Header__button')}
           >
-            <FaShoppingBag className="Header__button__icon" />
+            <FaSearch className="Header__button__icon" />
             <p>Explore</p>
           </NavLink>
           <NavLink
-            to="/carts"
+            to="/cart"
             className={({ isActive }) => (isActive ? 'Header__button Header__button--active' : 'Header__button')}
           >
             <FaShoppingCart className="Header__button__icon" />
-            <p>Carts</p>
+            <p>Cart</p>
           </NavLink>
         </Flex>
         <Flex className="gap-x-4" align="center">
-          <Flex className="relative w-[250px]" align="center">
-            <Input className="w-full rounded-full bg-[#f0d5fa] border-none text-base h-10 pr-16" placeholder="Search" />
-            <Button type="primary" className="absolute right-0 top-0 bottom-0 rounded-full p-0 w-14">
-              <FaSearchengin className="text-base" />
-            </Button>
-          </Flex>
           <Popover
             placement="bottomRight"
             content={
               <Flex className="flex-col gap-2">
-                <Link to="/account" className="flex !text-primary">
+                <Link to="/user-info" className="flex !text-primary">
                   <p className="text-primary">Thông tin tài khoản</p>
                 </Link>
                 <Link to="/login" onClick={handleLogout} className="flex !text-primary">

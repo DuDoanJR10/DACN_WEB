@@ -41,7 +41,6 @@ const CategoryDetail = ({ category, open, setOpen, setCategory }: CategoryDetail
           id: category?.id as string,
           name: values?.name as string,
           description: values?.description as string,
-          image: 'https://images.asics.com/is/image/asics/1011B796_001_SR_RT_GLB?$sfcc-product$',
         });
         if (res?.message) {
           toast.success(res?.message);
@@ -54,7 +53,6 @@ const CategoryDetail = ({ category, open, setOpen, setCategory }: CategoryDetail
         const res: any = await createCategoryAPI({
           name: values?.name as string,
           description: values?.description as string,
-          image: 'https://images.asics.com/is/image/asics/1011B796_001_SR_RT_GLB?$sfcc-product$',
         });
         if (res?.message) {
           toast.success(res?.message);

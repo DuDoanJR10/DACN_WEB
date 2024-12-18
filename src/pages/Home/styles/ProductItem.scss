@@ -1,0 +1,17 @@
+.ProductItem {
+  overflow: hidden;
+  height: 100%;
+  cursor: pointer;
+  background: #fff;
+  box-shadow: 0px 0px 3px 3px #ededed;
+  border-radius: 10px;
+  position: relative;
+
+  &__quantity {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    box-shadow: 0px 0px 1px 1px #ededed;
+    border-radius: 10px;
+  }
+}

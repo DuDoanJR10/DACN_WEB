@@ -1,0 +1,29 @@
+.ProductDetail {
+  &__quantity {
+    right: 8px;
+    box-shadow: 0px 0px 1px 1px #ededed;
+    border-radius: 10px;
+  }
+
+  &__size-item {
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    border: 1px solid #b226e3;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    &:hover {
+      .ProductDetail__size-item__label {
+        color: #fff;
+      }
+    }
+
+    &__active {
+      background-color: #b226e3;
+    }
+
+    &__label {
+    }
+  }
+}

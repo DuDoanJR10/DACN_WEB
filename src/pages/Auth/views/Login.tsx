@@ -5,7 +5,7 @@ import { Button, Form, Input, Flex } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { saveAccessToken, saveRefreshToken } from 'utils/jwt';
 import { useAppDispatch } from 'store/hooks';
-import { setIsAdmin, setIsLogin } from 'store/slices/authSlice';
+import { setIsAdmin, setIsLogin, setUser } from 'store/slices/authSlice';
 import { loginAPI } from 'apis/auth';
 import { toast } from 'react-toastify';
 import { handleErrorAPI } from 'utils/helpers';
@@ -27,6 +27,7 @@ const Login = () => {
         dispatch(setIsLogin(true));
         saveAccessToken(res?.data?.tokens?.accessToken?.token);
         saveRefreshToken(res?.data?.tokens?.refreshToken?.token);
+        dispatch(setUser(res?.data?.user));
         navigate('/');
       }
       setLoading(false);

@@ -6,6 +6,7 @@ import authReducer from 'store/slices/authSlice';
 import productReducer from 'store/slices/productSlice';
 import categoryReducer from 'store/slices/categorySlice';
 import accountReducer from 'store/slices/accountSlice';
+import cartReducer from 'store/slices/cartSlice';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   product: productReducer,
   category: categoryReducer,
   account: accountReducer,
+  cart: cartReducer,
   productAdmin: productAdminReducer,
 });
 

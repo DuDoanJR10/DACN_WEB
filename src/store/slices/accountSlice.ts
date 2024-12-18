@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AccountState } from 'store/interface';
 
 const initialState = {
   listAccount: [],
-};
+} as AccountState;
 
 const accountSlice = createSlice({
   name: 'account',

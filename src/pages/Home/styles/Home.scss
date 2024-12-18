@@ -1,0 +1,9 @@
+.Home {
+  &__slide {
+    width: calc(100% - 246px);
+  }
+
+  &__content {
+    min-height: calc(100vh - 396px);
+  }
+}
