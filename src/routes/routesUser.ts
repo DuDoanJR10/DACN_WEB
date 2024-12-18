@@ -7,6 +7,7 @@ const Cart = React.lazy(() => import('pages/Cart/views/Cart'));
 const OrderNow = React.lazy(() => import('pages/OrderNow/views/OrderNow'));
 const OrderCart = React.lazy(() => import('pages/OrderCart/views/OrderCart'));
 const UserInfo = React.lazy(() => import('pages/UserInfo/views/UserInfo'));
+const History = React.lazy(() => import('pages/History/views/History'));
 const ProductByCategory = React.lazy(() => import('pages/ProductByCategory/views/ProductByCategory'));
 
 const routes = [
@@ -49,6 +50,11 @@ const routes = [
     path: configs.routesUser.userInfo,
     element: UserInfo,
     name: 'Thông tin tài khoản',
+  },
+  {
+    path: configs.routesUser.history,
+    element: History,
+    name: 'Lịch sử mua hàng',
   },
 ];
 

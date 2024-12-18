@@ -20,7 +20,7 @@ const HeaderUser = () => {
   };
   return (
     <div className="bg-[#f7e9fc]">
-      <Flex className="Header container h-16" justify="space-between" align="center">
+      <Flex className="Header container h-16 px-4" justify="space-between" align="center">
         <Link to="/" className="!text-primary font-kaushan font-semibold text-3xl">
           Elly Store
         </Link>
@@ -54,6 +54,9 @@ const HeaderUser = () => {
               <Flex className="flex-col gap-2">
                 <Link to="/user-info" className="flex !text-primary">
                   <p className="text-primary">Thông tin tài khoản</p>
+                </Link>
+                <Link to="/history" className="flex !text-primary">
+                  <p className="text-primary">Lịch sử mua hàng</p>
                 </Link>
                 <Link to="/login" onClick={handleLogout} className="flex !text-primary">
                   <p className="text-primary">Đăng xuất</p>

@@ -7,6 +7,7 @@ const routes = {
   productDetail: '/product-detail/:id',
   productByCategory: '/product-by-category/:id',
   userInfo: '/user-info',
+  history: '/history',
 };
 
 export default routes;

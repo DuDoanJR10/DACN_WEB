@@ -4,7 +4,7 @@ import configs from 'configs';
 const Category = React.lazy(() => import('pages/Category/views/Category'));
 const Account = React.lazy(() => import('pages/Account/views/Account'));
 const ProductAdmin = React.lazy(() => import('pages/ProductAdmin/views/ProductAdmin'));
-const Bill = React.lazy(() => import('pages/Bill/views/Bill'));
+const OrderAdmin = React.lazy(() => import('pages/OrderAdmin/views/OrderAdmin'));
 const NotFound = React.lazy(() => import('pages/NotFound/NotFound'));
 
 const routes = [
@@ -29,9 +29,9 @@ const routes = [
     name: 'Tài khoản',
   },
   {
-    path: configs.routesAdmin.bill,
-    element: Bill,
-    name: 'Hoá đơn',
+    path: configs.routesAdmin.orderAdmin,
+    element: OrderAdmin,
+    name: 'Đơn hàng',
   },
 ];
 
