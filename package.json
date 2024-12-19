@@ -1,5 +1,5 @@
 {
-    "name": "Elly Store",
+    "name": "EllyStore",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -42,7 +42,8 @@
         "redux": "^5.0.1",
         "redux-persist": "^6.0.0",
         "sass": "^1.77.8",
-        "swiper": "^11.1.15"
+        "swiper": "^11.1.15",
+        "uuid": "^11.0.3"
     },
     "devDependencies": {
         "@babel/core": "^7.23.9",

@@ -1,7 +1,7 @@
-import { Button, Flex, Form, Input, Select, Space, Upload } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Flex, Form, Input, message, Modal, Select, Space, Upload } from 'antd';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ProductAttributesParams, ProductParams } from 'types/product';
-import { PlusOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import { getListCategoryAPI } from 'apis/category';
 import { setListCategory } from 'store/slices/categorySlice';
@@ -9,6 +9,9 @@ import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { handleErrorAPI } from 'utils/helpers';
 import { getDetailProductAPI, getListProductAPI, updateProductAPI } from 'apis/product';
 import { setListProduct } from 'store/slices/productSlice';
+import { RcFile, UploadFile } from 'antd/es/upload';
+import { uploadImageApi } from 'apis/upload';
+import { v4 as uuid } from 'uuid';
 
 interface ModalUpdateProps {
   open: boolean;
@@ -23,6 +26,15 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
   const [listFile, setListFile] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductParams>({} as ProductParams);
+  const [loadingThumbnail, setLoadingThumbnail] = useState(false);
+  const [loadingAlbum, setLoadingAlbum] = useState(false);
+  // Image
+  const [imageUrl, setImageUrl] = useState<string>();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const debounceRef = useRef(null);
 
   const { listCategory } = useAppSelector((state) => state.category);
 
@@ -68,8 +80,17 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
         category_id: res?.data?.category_id,
         product_attributes: res?.data?.product_attributes,
       });
-      setListFile(res?.data?.image_urls);
-      setFileImageThumbnail(res?.data?.thumbnail);
+
+      setImageUrl(`${process.env.API_URL}uploads/${res?.data?.thumbnail}`);
+      setFileList(
+        res?.data?.image_urls?.map((item: string, index: number) => ({
+          uid: index,
+          name: 'image.png',
+          status: 'done',
+          url: `${process.env.API_URL}uploads/${item}`,
+        })) as UploadFile[],
+      );
+
       setProduct(res?.data);
     } catch (error: any) {
       handleErrorAPI(error);
@@ -135,8 +156,8 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
           name: values?.name,
           description: values?.description,
           price: Number(values?.price),
-          thumbnail: fileImageThumbnail,
-          image_urls: listFile,
+          thumbnail: imageUrl ? imageUrl.split('uploads/')[1] : '',
+          image_urls: fileList.map((item) => (item.url ? item.url.split('uploads/')[1] : '')) as any,
           category_id: values?.category_id,
           price_original: Number(values?.price_original),
           product_attribute: values?.product_attributes?.map((item: ProductAttributesParams) => ({
@@ -162,6 +183,116 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
   };
 
   const filterOption = (input: any, option: any) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+  const uploadButtonThumbnail = (
+    <div>
+      {loadingThumbnail ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
+  const uploadButtonAlbum = (
+    <div>
+      {loadingAlbum ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
+  const beforeUpload = async (file: RcFile) => {
+    return new Promise((resolve, reject) => {
+      const typeNameFile = file.name.split('.')[file.name.split('.').length - 1];
+
+      const isTypeNameFile =
+        typeNameFile === 'jpg' || typeNameFile === 'jpeg' || typeNameFile === 'png' || typeNameFile === 'svg';
+
+      const isJpgOrPng =
+        file.type === 'image/jpg' ||
+        file.type === 'image/jpeg' ||
+        file.type === 'image/png' ||
+        file.type === 'image/svg+xml';
+      if (!isJpgOrPng || !isTypeNameFile) {
+        message.error('Invalid file format. Please try again!');
+        reject(new Error('Error'));
+      }
+      const isLt5M = file.size / 1024 / 1024 < 5;
+      if (!isLt5M) {
+        message.error('The maximum allowed photo upload size is 5MB');
+        reject(new Error('Error'));
+      }
+
+      resolve(file);
+    }).catch(() => {
+      return false;
+    });
+  };
+
+  const handlePreview = async (file) => {
+    setPreviewImage(file.url);
+    setPreviewOpen(true);
+    setPreviewTitle('Image product');
+  };
+
+  const customUploadImage = async (file: RcFile) => {
+    setLoadingThumbnail(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await uploadImageApi(formData);
+      console.log('resresresresresresres image', res);
+
+      if (res.data.data) {
+        setImageUrl(`${process.env.API_URL}uploads/${res.data.data.filename}`);
+      } else {
+        message.error('Upload image failed');
+      }
+    } catch (error) {
+      message.error('Upload image failed');
+    }
+    setLoadingThumbnail(false);
+  };
+
+  const customUploadImageList = async (files: any[]) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    debounceRef.current = setTimeout(async () => {
+      setLoadingAlbum(true);
+      const listAblum = files.filter((item) => item.status === 'done');
+
+      try {
+        for (let i = 0; i < files.length; i++) {
+          const dataBeforeUpload = await beforeUpload(files[i].originFileObj);
+          const isBeforeUpload = dataBeforeUpload ? true : false;
+          const check = files[i].status ? false : isBeforeUpload;
+
+          if (check) {
+            const formData = new FormData();
+            formData.append('file', files[i].originFileObj);
+            const res = await uploadImageApi(formData);
+
+            if (res.data.data) {
+              const uid = uuid();
+              listAblum.push({
+                uid: uid,
+                name: 'image.png',
+                status: 'done',
+                url: `${process.env.API_URL}uploads/${res.data.data.filename}`,
+              });
+            } else {
+              message.error('Upload image failed');
+            }
+          }
+        }
+        console.log('listAblum', listAblum);
+        setFileList(listAblum);
+        setLoadingAlbum(false);
+      } catch (error) {
+        console.log('error', error);
+        message.error('Upload image failed');
+        setLoadingAlbum(false);
+      }
+    }, 500) as unknown as null;
+    setLoadingAlbum(false);
+  };
 
   return (
     <div>
@@ -209,33 +340,38 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
           <p>Thumbnail</p>
         </Flex>
         <Upload
-          name="file"
-          action={`${process.env.API_URL}api/upload/image`}
-          method="POST"
-          onChange={handleChangeUploadThumbnail}
-          maxCount={1}
           listType="picture-card"
+          className="avatar-uploader"
+          beforeUpload={beforeUpload}
+          fileList={imageUrl ? [{ uid: '-1', name: 'image.png', status: 'done', url: imageUrl }] : []}
+          customRequest={({ file }) => customUploadImage(file as RcFile)}
+          onRemove={() => {
+            setImageUrl('');
+          }}
+          onPreview={handlePreview}
         >
-          <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Tải ảnh lên</div>
-          </div>
+          {imageUrl ? null : uploadButtonThumbnail}
         </Upload>
-        <Flex className="gap-1 mb-2 items-center">
+
+        <Flex className="gap-1 mb-2 items-center mt-3">
           <p className="text-[#ff4d4f] text-[10px]">*</p>
           <p>Danh sách ảnh sản phẩm</p>
         </Flex>
         <Upload
-          name="file"
-          action={`${process.env.API_URL}api/upload/image`}
-          method="POST"
-          onChange={handleChangeUploadListFile}
           listType="picture-card"
+          className="avatar-uploader mb-3"
+          beforeUpload={() => false}
+          fileList={fileList}
+          onRemove={(file) => {
+            setFileList(fileList.filter((item) => item.uid !== file.uid));
+          }}
+          onPreview={handlePreview}
+          accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+          multiple
+          onChange={({ fileList }) => customUploadImageList(fileList)}
+          maxCount={10}
         >
-          <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Tải ảnh lên</div>
-          </div>
+          {fileList.length >= 10 ? null : uploadButtonAlbum}
         </Upload>
         <Form.Item label="Danh mục" name="category_id">
           <Select
@@ -288,6 +424,9 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
           </Form.Item>
         </Space>
       </Form>
+      <Modal width={700} open={previewOpen} title={previewTitle} footer={null} onCancel={() => setPreviewOpen(false)}>
+        <img className="w-full object-contain" alt="example" src={previewImage} />
+      </Modal>
     </div>
   );
 };
