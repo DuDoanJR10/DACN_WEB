@@ -2,10 +2,12 @@ import { Form, Input, Button } from 'antd';
 import { updateUserInfoAPI } from 'apis/user';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { useAppSelector } from 'store/hooks';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { setUser } from 'store/slices/authSlice';
 import { handleErrorAPI } from 'utils/helpers';
 
 const UserInfo = () => {
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const { user } = useAppSelector((state) => state.auth);
 
@@ -17,14 +19,14 @@ const UserInfo = () => {
       });
       if (res?.success) {
         toast.success(res.message);
-        console.log('RES === ', res);
+        dispatch(setUser(res?.data));
       }
     } catch (error) {
       handleErrorAPI(error);
     }
   };
   return (
-    <div className="UserInfo mt-4 p-4 bg-white rounded-xl">
+    <div className="UserInfo mx-auto mt-4 p-4 bg-white rounded-xl max-w-[600px]">
       <Form
         form={form}
         initialValues={{

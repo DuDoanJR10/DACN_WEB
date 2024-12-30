@@ -143,14 +143,14 @@ const ModalUpdate = ({ setOpen, data }: ModalUpdateProps) => {
   const handleUpdate = async (values: any) => {
     try {
       setLoading(true);
-      if (!fileImageThumbnail) {
-        setLoading(false);
-        return toast.error('Vui lòng tải ảnh thumbnail!');
-      }
-      if (listFile?.length <= 0) {
-        setLoading(false);
-        return toast.error('Vui lòng tải ảnh sản phẩm!');
-      }
+      // if (!fileImageThumbnail) {
+      //   setLoading(false);
+      //   return toast.error('Vui lòng tải ảnh thumbnail!');
+      // }
+      // if (listFile?.length <= 0) {
+      //   setLoading(false);
+      //   return toast.error('Vui lòng tải ảnh sản phẩm!');
+      // }
       const res: any = await updateProductAPI(
         {
           name: values?.name,

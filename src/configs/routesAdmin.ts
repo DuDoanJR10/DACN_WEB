@@ -4,6 +4,7 @@ const routesAdmin = {
   category: 'category',
   account: 'account',
   bill: 'bill',
+  orderAdmin: 'orderAdmin',
   notFound: '*',
 };
 
