@@ -80,14 +80,14 @@ const ModalCreate = ({ setOpen }: ModalCreateProps) => {
   const handleUpdate = async (values: any) => {
     try {
       setLoading(true);
-      if (!imageUrl) {
-        setLoading(false);
-        return toast.error('Vui lòng tải ảnh thumbnail!');
-      }
-      if (fileList?.length <= 0) {
-        setLoading(false);
-        return toast.error('Vui lòng tải ảnh sản phẩm!');
-      }
+      // if (!imageUrl) {
+      //   setLoading(false);
+      //   return toast.error('Vui lòng tải ảnh thumbnail!');
+      // }
+      // if (fileList?.length <= 0) {
+      //   setLoading(false);
+      //   return toast.error('Vui lòng tải ảnh sản phẩm!');
+      // }
       const res: any = await createProductAPI({
         name: values?.name,
         description: values?.description,

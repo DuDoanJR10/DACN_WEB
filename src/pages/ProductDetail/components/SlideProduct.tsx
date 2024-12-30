@@ -25,26 +25,6 @@ const SlideProduct = ({ data }: SlideProductProps) => {
             <img className=" object-cover" src={`${process.env.API_URL}uploads/${url}`} alt="slide-1" />
           </SwiperSlide>
         ))}
-        {data?.map((url, index: number) => (
-          <SwiperSlide key={index}>
-            <img className=" object-cover" src={`${process.env.API_URL}uploads/${url}`} alt="slide-1" />
-          </SwiperSlide>
-        ))}
-        {data?.map((url, index: number) => (
-          <SwiperSlide key={index}>
-            <img className=" object-cover" src={`${process.env.API_URL}uploads/${url}`} alt="slide-1" />
-          </SwiperSlide>
-        ))}
-        {data?.map((url, index: number) => (
-          <SwiperSlide key={index}>
-            <img className=" object-cover" src={`${process.env.API_URL}uploads/${url}`} alt="slide-1" />
-          </SwiperSlide>
-        ))}
-        {data?.map((url, index: number) => (
-          <SwiperSlide key={index}>
-            <img className=" object-cover" src={`${process.env.API_URL}uploads/${url}`} alt="slide-1" />
-          </SwiperSlide>
-        ))}
       </Swiper>
     </div>
   );
